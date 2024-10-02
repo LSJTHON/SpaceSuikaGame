@@ -7,6 +7,8 @@ public class MagnetEffect : MonoBehaviour
     private Rigidbody2D rb;
 
     private bool isMerge = true;
+
+    private bool canDie = false;
     private void Start(){
         rb = GetComponent<Rigidbody2D>();
 
@@ -49,6 +51,13 @@ public class MagnetEffect : MonoBehaviour
                 Vector2 middlePosition = (this.transform.position + other.transform.position) / 2;
                 Instantiate(PlanetManager.Instance.planetPrefabList[this.mergeCount+1], middlePosition, Quaternion.identity);
             }
+        }
+
+        if(other.gameObject.CompareTag("DeadLine")){
+            if(canDie){
+                Debug.Log("GameOver");
+            }
+            canDie = true;
         }  
     }
 }
