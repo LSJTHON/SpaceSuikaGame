@@ -48,7 +48,7 @@ public class MagnetEffect : MonoBehaviour
                 Destroy(other.gameObject);
 
                 Vector2 middlePosition = (this.transform.position + other.transform.position) / 2;
-                GameObject nextPlanet = Instantiate(PlanetManager.Instance.planetPrefabList[this.mergeCount+1], middlePosition, Quaternion.identity);
+                Instantiate(PlanetManager.Instance.planetPrefabList[this.mergeCount+1], middlePosition, Quaternion.identity);
             }
         }  
     }

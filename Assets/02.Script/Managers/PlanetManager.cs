@@ -8,23 +8,32 @@ public class PlanetManager : Singleton<PlanetManager>
 {
     public List<GameObject> planetPrefabList = new List<GameObject>();
     [SerializeField] public int planetCount = 1;
-    Vector2 firstPosition = new Vector2(-10,0);
-    [SerializeField] public GameObject waitingPlanet;
-    private void Start() {
+    Vector2 firstPosition = new Vector2(-10, 0);
+    public GameObject waitingPlanet;
+    public GameObject firePlanet;
+    public Transform spawnPosition;
+    private void Start()
+    {
         Debug.Log("Game Start!!!");
-
-        StartCoroutine(InstantiatePlanet(1f));
+        firePlanet = Instantiate(planetPrefabList[Random.Range(0, 4)], firstPosition, Quaternion.identity);
+        firePlanet.GetComponent<Rigidbody2D>().simulated = false;
+        waitingPlanet = Instantiate(planetPrefabList[Random.Range(0, 4)], spawnPosition.transform.position, Quaternion.identity);
+        waitingPlanet.GetComponent<Rigidbody2D>().simulated = false;
     }
 
-    public IEnumerator InstantiatePlanet(float delay){
-
+    public IEnumerator NextPlanet(float delay)
+    {
         yield return new WaitForSeconds(delay);
 
-        int randomPlanetIndex = Random.Range(0, 4);
-
-        Debug.Log($"{randomPlanetIndex}번의 행성은 {planetPrefabList[randomPlanetIndex].gameObject.name}!!!!");
-
-        waitingPlanet = Instantiate(planetPrefabList[randomPlanetIndex], firstPosition , Quaternion.identity);
-        waitingPlanet.GetComponent<Rigidbody2D>().simulated = false;
+        if (firePlanet == null)
+        {
+            // waitingPlanet -> firePlanet
+            firePlanet = waitingPlanet;
+            // 새로운 waitingPlanet 생성
+            int randomPlanetIndex = Random.Range(0, 4);
+            waitingPlanet = Instantiate(planetPrefabList[randomPlanetIndex], spawnPosition.transform.position, Quaternion.identity);
+            firePlanet.transform.position = firstPosition;
+            waitingPlanet.GetComponent<Rigidbody2D>().simulated = false;
+        }
     }
 }
