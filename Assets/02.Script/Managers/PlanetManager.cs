@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.AI;
 
 public class PlanetManager : Singleton<PlanetManager>
 {
@@ -20,7 +18,6 @@ public class PlanetManager : Singleton<PlanetManager>
         waitingPlanet = Instantiate(planetPrefabList[Random.Range(0, 4)], spawnPosition.transform.position, Quaternion.identity);
         waitingPlanet.GetComponent<Rigidbody2D>().simulated = false;
     }
-
     public IEnumerator NextPlanet(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -29,7 +26,7 @@ public class PlanetManager : Singleton<PlanetManager>
         {
             // waitingPlanet -> firePlanet
             firePlanet = waitingPlanet;
-            // 새로운 waitingPlanet 생성
+            // generate new waitingPlanet
             int randomPlanetIndex = Random.Range(0, 4);
             waitingPlanet = Instantiate(planetPrefabList[randomPlanetIndex], spawnPosition.transform.position, Quaternion.identity);
             firePlanet.transform.position = firstPosition;

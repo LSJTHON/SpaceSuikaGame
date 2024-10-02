@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DragAndFire : MonoBehaviour
 {
-
-    private Vector2 defaultPosition = new Vector2(-10, 0);
+    private Vector2 firstMousePoint = new Vector2(-10, 0);
     private float shootingForce;
     private Vector2 initialMousePosition;
     private Vector2 deltaPosition;
@@ -22,7 +19,7 @@ public class DragAndFire : MonoBehaviour
             deltaPosition = mousePosition - initialMousePosition;
             //Debug.Log(Vector2.Distance(initialMousePosition,mousePosition));
             if(Vector2.Distance(initialMousePosition,mousePosition) <= 1f){
-                PlanetManager.Instance.firePlanet.transform.position = defaultPosition + deltaPosition;
+                PlanetManager.Instance.firePlanet.transform.position = firstMousePoint + deltaPosition;
                 shootingForce = Vector2.Distance(initialMousePosition,mousePosition);
             }else{
                 Debug.Log("어어 길다길어");
@@ -33,7 +30,7 @@ public class DragAndFire : MonoBehaviour
             waitingPlanetRigidbody.simulated = true;
             Debug.Log(shootingForce+" 발싸!!!!!!");
             waitingPlanetRigidbody.AddForce(-deltaPosition.normalized * shootingForce* 500f);
-            
+
             PlanetManager.Instance.firePlanet = null;
 
             StartCoroutine(PlanetManager.Instance.NextPlanet(1f));

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MagnetEffect : MonoBehaviour
@@ -43,7 +42,7 @@ public class MagnetEffect : MonoBehaviour
 
             MagnetEffect otherPlanet = other.gameObject.GetComponent<MagnetEffect>(); 
             if(this.planetId > otherPlanet.planetId && this.mergeCount == otherPlanet.mergeCount){
-                Debug.Log("같은 행성끼리 충돌했다!!!!!!");
+                Debug.Log("Merge!!!!!!");
                 Destroy(this.gameObject);
                 Destroy(other.gameObject);
 
