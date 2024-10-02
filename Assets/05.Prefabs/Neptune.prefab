@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3504139006070604603}
   m_Layer: 0
   m_Name: Neptune
-  m_TagString: Untagged
+  m_TagString: Planet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,3 +162,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planetId: 0
+  mergeCount: 5

@@ -1,13 +1,18 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class MagnetEffect : MonoBehaviour
 {
-    [SerializeField] private int planetId;
-
+    [SerializeField]private int planetId;
+    [SerializeField]private int mergeCount;
     private Rigidbody2D rb;
 
+    private bool isMerge = true;
     private void Start(){
         rb = GetComponent<Rigidbody2D>();
+
+        planetId = PlanetManager.Instance.planetCount;
+        PlanetManager.Instance.planetCount += 1;
     }
     private void FixedUpdate()
     {
@@ -27,5 +32,24 @@ public class NewBehaviourScript : MonoBehaviour
             }
             rb.velocity = newVelocity;
         }
+        if (!isMerge) {
+            isMerge = true; // 다음 프레임에서 다시 충돌 가능
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if(other.gameObject.CompareTag("Planet") && isMerge){
+            isMerge = false; // 충돌 처리 시작
+
+            MagnetEffect otherPlanet = other.gameObject.GetComponent<MagnetEffect>(); 
+            if(this.planetId > otherPlanet.planetId && this.mergeCount == otherPlanet.mergeCount){
+                Debug.Log("같은 행성끼리 충돌했다!!!!!!");
+                Destroy(this.gameObject);
+                Destroy(other.gameObject);
+
+                Vector2 middlePosition = (this.transform.position + other.transform.position) / 2;
+                GameObject nextPlanet = Instantiate(PlanetManager.Instance.planetPrefabList[this.mergeCount+1], middlePosition, Quaternion.identity);
+            }
+        }  
     }
 }
