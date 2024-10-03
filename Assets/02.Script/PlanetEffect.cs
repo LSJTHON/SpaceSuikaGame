@@ -35,7 +35,7 @@ public class MagnetEffect : MonoBehaviour
 
             newVelocity += zeroPosition * addMagnet * Time.fixedDeltaTime;
 
-            float fixedSpeed = 8f;
+            float fixedSpeed = 7f;
 
             if (newVelocity.magnitude > fixedSpeed)
             {
