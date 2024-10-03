@@ -27,6 +27,7 @@ public class DragAndFire : MonoBehaviour
         }else if(Input.GetMouseButtonUp(0) && PlanetManager.Instance.firePlanet != null)
         {
             Rigidbody2D waitingPlanetRigidbody = PlanetManager.Instance.firePlanet.GetComponent<Rigidbody2D>();
+            waitingPlanetRigidbody.gameObject.GetComponent<MagnetEffect>().enabled = true;
             waitingPlanetRigidbody.simulated = true;
             Debug.Log(shootingForce+" 발싸!!!!!!");
             waitingPlanetRigidbody.AddForce(-deltaPosition.normalized * shootingForce* 500f);

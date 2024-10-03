@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlanetManager : Singleton<PlanetManager>
 {
-    public List<GameObject> planetPrefabList = new List<GameObject>();
     [SerializeField] public int planetCount = 1;
-    Vector2 firstPosition = new Vector2(-10, 0);
+    public List<GameObject> planetPrefabList = new List<GameObject>();
+    private Vector2 firstPosition = new Vector2(-10, 0);
     public GameObject waitingPlanet;
     public GameObject firePlanet;
     public Transform spawnPosition;
@@ -31,6 +31,7 @@ public class PlanetManager : Singleton<PlanetManager>
             waitingPlanet = Instantiate(planetPrefabList[randomPlanetIndex], spawnPosition.transform.position, Quaternion.identity);
             firePlanet.transform.position = firstPosition;
             waitingPlanet.GetComponent<Rigidbody2D>().simulated = false;
+            waitingPlanet.GetComponent<MagnetEffect>().enabled = false;
         }
     }
 }
