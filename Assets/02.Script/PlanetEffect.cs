@@ -1,4 +1,7 @@
 using System.Collections;
+using TMPro;
+using TMPro.SpriteAssetUtilities;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class MagnetEffect : MonoBehaviour
@@ -15,7 +18,7 @@ public class MagnetEffect : MonoBehaviour
 
         planetId = PlanetManager.Instance.planetCount;
         PlanetManager.Instance.planetCount += 1;
-        radius = transform.localScale.x/2;
+        radius = transform.localScale.x / 2;
     }
     private void FixedUpdate()
     {
@@ -41,11 +44,11 @@ public class MagnetEffect : MonoBehaviour
             rb.velocity = newVelocity;
         }
         float isDead = deadRadius - radius;
-        float planetDistance = transform.position.magnitude; 
-        if(canDie && isDead < planetDistance){
-            Debug.Log("너 뒤짐;;"+ this.name);
+        float planetDistance = transform.position.magnitude;
+        if (canDie && isDead < planetDistance)
+        {
+            Debug.Log("너 뒤짐;;" + this.name);
         }
-
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -58,14 +61,20 @@ public class MagnetEffect : MonoBehaviour
                 Debug.Log("Merge!!!!!!");
                 Destroy(this.gameObject);
                 Destroy(other.gameObject);
-
                 Vector2 middlePosition = (this.transform.position + other.transform.position) / 2;
-                Instantiate(PlanetManager.Instance.planetPrefabList[this.mergeCount + 1], middlePosition, Quaternion.identity);
+                GameObject mergePlanet = Instantiate(PlanetManager.Instance.planetPrefabList[this.mergeCount + 1], middlePosition, Quaternion.identity);
+                mergePlanet.transform.SetParent(PlanetManager.Instance.firePlanetPosition);
+                PlanetManager.Instance.totalScore += (mergeCount + 1) * 10;
+                PlanetManager.Instance.scoreText.text = $"Score : {PlanetManager.Instance.totalScore}";
             }
         }
-        StartCoroutine(OnDeath());
+        if (!canDie)
+        {
+            StartCoroutine(OnDeath());
+        }
     }
-    private IEnumerator OnDeath(){
+    private IEnumerator OnDeath()
+    {
         yield return new WaitForSeconds(2f);
         canDie = true;
         //Debug.Log(" 이제 죽는데이");

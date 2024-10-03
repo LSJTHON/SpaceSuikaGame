@@ -9,7 +9,7 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
     protected virtual void Awake()
     {
 
-        if (null == instance)
+        if (instance == null)
         {
             instance = (T)this;
 
@@ -26,7 +26,7 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
         get
         {
-            if (null == instance)
+            if (instance == null)
             {
                 return null;
             }
