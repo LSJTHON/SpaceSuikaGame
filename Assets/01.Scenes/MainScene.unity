@@ -322,15 +322,15 @@ MonoBehaviour:
   totalScore: 0
   scoreText: {fileID: 132716105}
   planetPrefabList:
-  - {fileID: 7934807363878597433, guid: ff7c036036380fa4088a8a57514722b8, type: 3}
+  - {fileID: 2084265983489535855, guid: ff7c036036380fa4088a8a57514722b8, type: 3}
   - {fileID: 1390960387951438754, guid: 95adcceb4a8497941bc66ba44c09d6d4, type: 3}
-  - {fileID: 6535280621109299748, guid: 72a844eeb343a914fbe5ba694a6ada8d, type: 3}
+  - {fileID: 6810438419471854154, guid: 72a844eeb343a914fbe5ba694a6ada8d, type: 3}
   - {fileID: 1769311771223318777, guid: 78201f57feac7c54a87dfe84e8adcf61, type: 3}
-  - {fileID: 7880512735896025252, guid: eea8bcfc002daa344a6d30ca4e44b8e4, type: 3}
+  - {fileID: 7858759297196965558, guid: 165f700b287e0a14a9fd8310c0590f6d, type: 3}
   - {fileID: 6305024413333128292, guid: 7b2042595f36f6745a55399aab301078, type: 3}
   - {fileID: 849008883663779661, guid: d110cd67a9eaac946b23b33451e3f2d9, type: 3}
   - {fileID: 426954479689548936, guid: fbd85f06e9bf8344a87bf5508d6734ae, type: 3}
-  - {fileID: 5177310929263954938, guid: dfc372d73cc001b43b7ef7acf99154ec, type: 3}
+  - {fileID: 4564999623854678311, guid: 0ab441532f1e13849aedb8a183c75521, type: 3}
   - {fileID: 4564999623854678311, guid: 4af358546e97e9345bc798ab28fd6124, type: 3}
   spawnPosition: {fileID: 809119558}
   firePlanetPosition: {fileID: 195721124}
