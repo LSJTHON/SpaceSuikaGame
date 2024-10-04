@@ -1,7 +1,4 @@
 using System.Collections;
-using TMPro;
-using TMPro.SpriteAssetUtilities;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class MagnetEffect : MonoBehaviour
@@ -43,11 +40,14 @@ public class MagnetEffect : MonoBehaviour
             }
             rb.velocity = newVelocity;
         }
-        float isDead = deadRadius - radius;
+        float isDeadRadius = deadRadius - radius;
         float planetDistance = transform.position.magnitude;
-        if (canDie && isDead < planetDistance)
+        if (canDie && isDeadRadius < planetDistance)
         {
-            Debug.Log("너 뒤짐;;" + this.name);
+            Vector2 deadPlanetRotation = transform.position;
+            Debug.Log(deadPlanetRotation+" 어딜 바라보노?" + this.name);
+            PlanetManager.Instance.isDead = true;
+            StartCoroutine(PlanetManager.Instance.ReStartGame(2f));
         }
     }
 
