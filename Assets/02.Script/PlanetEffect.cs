@@ -44,8 +44,6 @@ public class MagnetEffect : MonoBehaviour
         float planetDistance = transform.position.magnitude;
         if (canDie && isDeadRadius < planetDistance)
         {
-            Vector2 deadPlanetRotation = transform.position;
-            Debug.Log(deadPlanetRotation+" 어딜 바라보노?" + this.name);
             PlanetManager.Instance.isDead = true;
             StartCoroutine(PlanetManager.Instance.ReStartGame(2f));
         }

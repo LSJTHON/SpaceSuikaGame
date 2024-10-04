@@ -23,7 +23,21 @@ public class PlanetManager : Singleton<PlanetManager>
         StartGame();
 
         restartButton.onClick.AddListener(() => {
-            StartCoroutine(ReStartGame());
+            //StartCoroutine(ReStartGame());
+
+            for (int waitingChildIndex = 0; waitingChildIndex < spawnPosition.childCount; waitingChildIndex++)
+            {
+                Destroy(spawnPosition.GetChild(waitingChildIndex).gameObject);
+            }
+            for (int fireChildIndex = 0; fireChildIndex < firePlanetPosition.childCount; fireChildIndex++)
+            {
+                Destroy(firePlanetPosition.GetChild(fireChildIndex).gameObject);
+            }
+            gameOverPanel.SetActive(false);
+
+            StartGame();
+
+            totalScore = 0;
         });
     }
     public IEnumerator NextPlanet(float delay)
@@ -45,7 +59,7 @@ public class PlanetManager : Singleton<PlanetManager>
         }
     }
 
-    public void StartGame()
+    private void StartGame()
     {
         scoreText.text = $"Score : {totalScore}";
         firePlanet = Instantiate(planetPrefabList[Random.Range(0, 4)], firePlanetPosition);
@@ -59,6 +73,7 @@ public class PlanetManager : Singleton<PlanetManager>
 
         if (isDead)
         {
+            isDead = false;
             for (int waitingChildIndex = 0; waitingChildIndex < spawnPosition.childCount; waitingChildIndex++)
             {
                 //firePlanetPosition.GetChild(waitingChildIndex).gameObject.GetComponent<MagnetEffect>().enabled = false;
@@ -72,25 +87,5 @@ public class PlanetManager : Singleton<PlanetManager>
             yield return new WaitForSeconds(delay);
             gameOverPanel.SetActive(true);
         }
-
-        yield return new WaitForSeconds(delay);
-        spawnPosition = GameObject.Find("NextPlanetSpawnPoint").transform;
-        firePlanetPosition = GameObject.Find("FirePlanetPosition").transform;
-
-
-        for (int waitingChildIndex = 0; waitingChildIndex < spawnPosition.childCount; waitingChildIndex++)
-        {
-            Destroy(spawnPosition.GetChild(waitingChildIndex).gameObject);
-        }
-        for (int fireChildIndex = 0; fireChildIndex < firePlanetPosition.childCount; fireChildIndex++)
-        {
-            Destroy(firePlanetPosition.GetChild(fireChildIndex).gameObject);
-        }
-
-        gameOverPanel.SetActive(false);
-
-        totalScore = 0;
-        isDead = false;
-        StartGame();
     }
 }
