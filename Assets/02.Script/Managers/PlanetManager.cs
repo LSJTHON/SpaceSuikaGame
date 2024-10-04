@@ -20,7 +20,7 @@ public class PlanetManager : Singleton<PlanetManager>
         StartGame();
 
         restartButton.onClick.AddListener(() => {
-            Debug.Log("클릭쓰!");
+            //Debug.Log("클릭쓰!");
             spawnPosition = GameObject.Find("NextPlanetSpawnPoint").transform;
             firePlanetPosition = GameObject.Find("FirePlanetPosition").transform;
 
@@ -34,9 +34,9 @@ public class PlanetManager : Singleton<PlanetManager>
                 Destroy(firePlanetPosition.GetChild(fireChildIndex).gameObject);
             }
 
+            totalScore = 0;
             StartGame();
 
-            totalScore = 0;
         });
     }
     public IEnumerator NextPlanet(float delay)
@@ -60,6 +60,7 @@ public class PlanetManager : Singleton<PlanetManager>
 
     public void StartGame()
     {
+        scoreText.text = $"Score : {totalScore}";
         firePlanet = Instantiate(planetPrefabList[Random.Range(0, 4)], firePlanetPosition);
         firePlanet.GetComponent<Rigidbody2D>().simulated = false;
         waitingPlanet = Instantiate(planetPrefabList[Random.Range(0, 4)], spawnPosition.transform);
