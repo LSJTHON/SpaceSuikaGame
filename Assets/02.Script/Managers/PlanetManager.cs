@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlanetManager : Singleton<PlanetManager>
 {
-    [Header("PlanetSetting")]
+    [Header("[PlanetSetting]")]
     [SerializeField] private int planetCount = 1;
     [SerializeField] private List<GameObject> planetPrefabList = new List<GameObject>();
     [SerializeField] private Button restartButton;
@@ -15,13 +15,19 @@ public class PlanetManager : Singleton<PlanetManager>
     [SerializeField] private GameObject waitingPlanet;
     [SerializeField] private GameObject firePlanet;
 
-    [Header("ScoreSetting")]
+    [Header("[ScoreSetting]")]
     [SerializeField] private int totalScore = 0;
     public TextMeshProUGUI scoreText;
 
-    [Header("PlaySetting")]
+    [Header("[PlaySetting]")]
+    [SerializeField] private GameObject gameOverTargetHole;
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private Transform deadPlanetTransform;
+    private Animator deadAnimation;
+
+
     public bool isDead = false;
+    private bool isStopAnimation = false;
 
     #region Getter and setter
     public void SetScore(int score)
@@ -71,6 +77,7 @@ public class PlanetManager : Singleton<PlanetManager>
         StartGame();
 
         restartButton.onClick.AddListener(() => {
+
             for (int waitingChildIndex = 0; waitingChildIndex < waitingPlanetSpawnPint.childCount; waitingChildIndex++)
             {
                 Destroy(waitingPlanetSpawnPint.GetChild(waitingChildIndex).gameObject);
@@ -79,10 +86,32 @@ public class PlanetManager : Singleton<PlanetManager>
             {
                 Destroy(firePlanetSpawnPoint.GetChild(fireChildIndex).gameObject);
             }
-            gameOverPanel.SetActive(false);
 
+            if (isStopAnimation)
+            {
+                gameOverTargetHole.transform.localScale = new Vector2(33,33);
+                deadAnimation.enabled = true;
+            }
+
+            gameOverPanel.SetActive(false);
             StartGame();
         });
+    }
+    private void Update()
+    {
+        if (deadPlanetTransform == null)
+        {
+            return;
+        }
+        if (gameOverPanel.activeSelf && gameOverTargetHole.transform.localScale.x <= deadPlanetTransform.localScale.x + 1f)
+        {
+            isStopAnimation = true;
+            //gameOverTargetHole.transform.position = new Vector2(deadPlanetTransform.position.x, deadPlanetTransform.position.y);
+            deadAnimation = gameOverTargetHole.GetComponent<Animator>();
+            deadAnimation.enabled = false;
+            deadPlanetTransform = null;
+            Debug.Log("한번만 띄우고 말겡 ㅔ헿");
+        }
     }
     public IEnumerator NextPlanet(float delay)
     {
@@ -110,8 +139,12 @@ public class PlanetManager : Singleton<PlanetManager>
         waitingPlanet = Instantiate(planetPrefabList[Random.Range(0, 4)], waitingPlanetSpawnPint.transform);
         waitingPlanet.GetComponent<Rigidbody2D>().simulated = false;
     }
-    public IEnumerator ReStartGame(float delay = 0.1f)
+    public IEnumerator GameOver(float delay = 0.1f, Transform deadPlanet = null)
     {
+        if (deadPlanet != null)
+        {
+            deadPlanetTransform = deadPlanet;
+        }
         if (isDead)
         {
             isDead = false;
@@ -123,8 +156,11 @@ public class PlanetManager : Singleton<PlanetManager>
             {
                 firePlanetSpawnPoint.GetChild(fireChildIndex).gameObject.GetComponent<Rigidbody2D>().simulated = false;
             }
-            yield return new WaitForSeconds(delay);
             gameOverPanel.SetActive(true);
+            gameOverTargetHole.transform.position = new Vector2(deadPlanetTransform.position.x, deadPlanetTransform.position.y);
+            isStopAnimation = false;
+            Debug.Log(" 너 지금 몇번 호출중?");
+            yield return new WaitForSeconds(delay);
         }
     }
 }
