@@ -342,7 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 195721124}
   m_Layer: 0
-  m_Name: FirePlanetPosition
+  m_Name: FirePlanetSpawnPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -393,10 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDontDestroy: 1
-  restartButton: {fileID: 1141040906}
   planetCount: 1
-  totalScore: 0
-  scoreText: {fileID: 132716105}
   planetPrefabList:
   - {fileID: 2084265983489535855, guid: ff7c036036380fa4088a8a57514722b8, type: 3}
   - {fileID: 1390960387951438754, guid: 95adcceb4a8497941bc66ba44c09d6d4, type: 3}
@@ -408,10 +405,13 @@ MonoBehaviour:
   - {fileID: 426954479689548936, guid: fbd85f06e9bf8344a87bf5508d6734ae, type: 3}
   - {fileID: 4564999623854678311, guid: 0ab441532f1e13849aedb8a183c75521, type: 3}
   - {fileID: 4564999623854678311, guid: 4af358546e97e9345bc798ab28fd6124, type: 3}
-  spawnPosition: {fileID: 809119558}
-  firePlanetPosition: {fileID: 195721124}
+  restartButton: {fileID: 1141040906}
+  waitingPlanetSpawnPint: {fileID: 809119558}
+  firePlanetSpawnPoint: {fileID: 195721124}
   waitingPlanet: {fileID: 0}
   firePlanet: {fileID: 0}
+  totalScore: 0
+  scoreText: {fileID: 132716105}
   gameOverPanel: {fileID: 57172282}
   isDead: 0
 --- !u!4 &341833780
@@ -846,7 +846,7 @@ GameObject:
   m_Component:
   - component: {fileID: 809119558}
   m_Layer: 0
-  m_Name: NextPlanetSpawnPoint
+  m_Name: WaitingPlanetSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
