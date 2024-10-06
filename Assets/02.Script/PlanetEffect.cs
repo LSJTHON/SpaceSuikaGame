@@ -45,7 +45,7 @@ public class PlanetEffect : MonoBehaviour
         if (canDie && isDeadRadius < planetDistance)
         {
             PlanetManager.Instance.isDead = true;
-            StartCoroutine(PlanetManager.Instance.GameOver(2f, this.transform));
+            PlanetManager.Instance.GameOver(2f, this.transform);
             canDie = false;
         }
     }

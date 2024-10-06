@@ -139,7 +139,7 @@ public class PlanetManager : Singleton<PlanetManager>
         waitingPlanet = Instantiate(planetPrefabList[Random.Range(0, 4)], waitingPlanetSpawnPint.transform);
         waitingPlanet.GetComponent<Rigidbody2D>().simulated = false;
     }
-    public IEnumerator GameOver(float delay = 0.1f, Transform deadPlanet = null)
+    public void GameOver(float delay = 0.1f, Transform deadPlanet = null)
     {
         if (deadPlanet != null)
         {
@@ -160,7 +160,6 @@ public class PlanetManager : Singleton<PlanetManager>
             gameOverTargetHole.transform.position = new Vector2(deadPlanetTransform.position.x, deadPlanetTransform.position.y);
             isStopAnimation = false;
             //Debug.Log(" 너 지금 몇번 호출중?");
-            yield return new WaitForSeconds(delay);
         }
     }
 }
