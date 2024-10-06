@@ -110,7 +110,7 @@ public class PlanetManager : Singleton<PlanetManager>
             deadAnimation = gameOverTargetHole.GetComponent<Animator>();
             deadAnimation.enabled = false;
             deadPlanetTransform = null;
-            Debug.Log("한번만 띄우고 말겡 ㅔ헿");
+            //Debug.Log("한번만 호출하제이?");
         }
     }
     public IEnumerator NextPlanet(float delay)
@@ -159,7 +159,7 @@ public class PlanetManager : Singleton<PlanetManager>
             gameOverPanel.SetActive(true);
             gameOverTargetHole.transform.position = new Vector2(deadPlanetTransform.position.x, deadPlanetTransform.position.y);
             isStopAnimation = false;
-            Debug.Log(" 너 지금 몇번 호출중?");
+            //Debug.Log(" 너 지금 몇번 호출중?");
             yield return new WaitForSeconds(delay);
         }
     }
