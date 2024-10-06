@@ -8,6 +8,7 @@ public class PlanetEffect : MonoBehaviour
     private Rigidbody2D rb;
     private float radius;
     private float deadRadius = 4f;
+    private int maxMergeCount = 9;
     private bool canDie = false;
     private void Start()
     {
@@ -55,7 +56,7 @@ public class PlanetEffect : MonoBehaviour
         if (other.gameObject.CompareTag("Planet"))
         {
             PlanetEffect otherPlanet = other.gameObject.GetComponent<PlanetEffect>();
-            if (this.planetId > otherPlanet.planetId && this.mergeCount == otherPlanet.mergeCount)
+            if (this.planetId > otherPlanet.planetId && this.mergeCount == otherPlanet.mergeCount && this.mergeCount < maxMergeCount)
             {
                 Debug.Log("Merge!!!!!!");
                 Destroy(this.gameObject);
@@ -63,7 +64,14 @@ public class PlanetEffect : MonoBehaviour
                 Vector2 middlePosition = (this.transform.position + other.transform.position) / 2;
                 GameObject mergePlanet = Instantiate(PlanetManager.Instance.GetPlanetPrefabList(this.mergeCount + 1), middlePosition, Quaternion.identity);
                 mergePlanet.transform.SetParent(PlanetManager.Instance.GetFirePlanetSpawnPoint());
-                PlanetManager.Instance.SetScore((mergeCount + 1) * 10);
+                PlanetManager.Instance.SetScore((mergeCount + 1) * 30);
+                PlanetManager.Instance.scoreText.text = $"Score : {PlanetManager.Instance.GetScore()}";
+            }else if(this.planetId > otherPlanet.planetId && this.mergeCount == otherPlanet.mergeCount && this.mergeCount >= maxMergeCount)
+            {
+                Debug.Log("하늘 아래 태양이 둘 일 수 없다.");
+                Destroy(this.gameObject);
+                Destroy(other.gameObject);
+                PlanetManager.Instance.SetScore((mergeCount + 1) * 30);
                 PlanetManager.Instance.scoreText.text = $"Score : {PlanetManager.Instance.GetScore()}";
             }
         }
