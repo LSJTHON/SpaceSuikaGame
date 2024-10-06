@@ -12,25 +12,25 @@ public class DragAndFire : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) // 클릭 시작 시 초기 마우스 위치 저장
         {
             initialMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        }else if (Input.GetMouseButton(0) && PlanetManager.Instance.firePlanet != null && initialMousePosition.x <= 5f)
+        }else if (Input.GetMouseButton(0) && PlanetManager.Instance.GetFirePlanet() != null && initialMousePosition.x <= 5f)
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // 이동한 거리 계산
             deltaPosition = mousePosition - initialMousePosition;
             //Debug.Log(Vector2.Distance(initialMousePosition,mousePosition));
             if(Vector2.Distance(initialMousePosition,mousePosition) <= 1f){
-                PlanetManager.Instance.firePlanet.transform.position = firstMousePoint + deltaPosition;
+                PlanetManager.Instance.GetFirePlanet().transform.position = firstMousePoint + deltaPosition;
                 shootingForce = Vector2.Distance(initialMousePosition,mousePosition);
             }else{
                 //Debug.Log("어어 길다길어");
             }
-        }else if(Input.GetMouseButtonUp(0) && PlanetManager.Instance.firePlanet != null && initialMousePosition.x <= 5f)
+        }else if(Input.GetMouseButtonUp(0) && PlanetManager.Instance.GetFirePlanet() != null && initialMousePosition.x <= 5f)
         {
-            Rigidbody2D waitingPlanetRigidbody = PlanetManager.Instance.firePlanet.GetComponent<Rigidbody2D>();
-            waitingPlanetRigidbody.gameObject.GetComponent<MagnetEffect>().enabled = true;
+            Rigidbody2D waitingPlanetRigidbody = PlanetManager.Instance.GetFirePlanet().GetComponent<Rigidbody2D>();
+            waitingPlanetRigidbody.gameObject.GetComponent<PlanetEffect>().enabled = true;
             waitingPlanetRigidbody.simulated = true;
             waitingPlanetRigidbody.AddForce(-deltaPosition.normalized * shootingForce* 500f);
-            PlanetManager.Instance.firePlanet = null;
+            PlanetManager.Instance.SetFirePlanet(null);
             StartCoroutine(PlanetManager.Instance.NextPlanet(1f));
         }
         else

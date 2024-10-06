@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MagnetEffect : MonoBehaviour
+public class PlanetEffect : MonoBehaviour
 {
     [SerializeField] private int planetId;
     [SerializeField] private int mergeCount;
@@ -13,8 +13,8 @@ public class MagnetEffect : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        planetId = PlanetManager.Instance.planetCount;
-        PlanetManager.Instance.planetCount += 1;
+        planetId = PlanetManager.Instance.GetPlanetCount();
+        PlanetManager.Instance.SetPlanetCount();
         radius = transform.localScale.x / 2;
     }
     private void FixedUpdate()
@@ -53,17 +53,17 @@ public class MagnetEffect : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Planet"))
         {
-            MagnetEffect otherPlanet = other.gameObject.GetComponent<MagnetEffect>();
+            PlanetEffect otherPlanet = other.gameObject.GetComponent<PlanetEffect>();
             if (this.planetId > otherPlanet.planetId && this.mergeCount == otherPlanet.mergeCount)
             {
                 Debug.Log("Merge!!!!!!");
                 Destroy(this.gameObject);
                 Destroy(other.gameObject);
                 Vector2 middlePosition = (this.transform.position + other.transform.position) / 2;
-                GameObject mergePlanet = Instantiate(PlanetManager.Instance.planetPrefabList[this.mergeCount + 1], middlePosition, Quaternion.identity);
-                mergePlanet.transform.SetParent(PlanetManager.Instance.firePlanetPosition);
-                PlanetManager.Instance.totalScore += (mergeCount + 1) * 10;
-                PlanetManager.Instance.scoreText.text = $"Score : {PlanetManager.Instance.totalScore}";
+                GameObject mergePlanet = Instantiate(PlanetManager.Instance.GetPlanetPrefabList(this.mergeCount + 1), middlePosition, Quaternion.identity);
+                mergePlanet.transform.SetParent(PlanetManager.Instance.GetFirePlanetSpawnPoint());
+                PlanetManager.Instance.SetScore((mergeCount + 1) * 10);
+                PlanetManager.Instance.scoreText.text = $"Score : {PlanetManager.Instance.GetScore()}";
             }
         }
         if (!canDie)
