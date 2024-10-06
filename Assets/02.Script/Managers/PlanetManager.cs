@@ -53,10 +53,6 @@ public class PlanetManager : Singleton<PlanetManager>
     {
         return planetPrefabList[planetIndex];
     }
-    //public Transform GetWaitingPlanetSpawnPint()
-    //{
-    //    return waitingPlanetSpawnPint;
-    //}
     public Transform GetFirePlanetSpawnPoint()
     {
         return firePlanetSpawnPoint;
