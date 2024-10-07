@@ -7,7 +7,7 @@ public class PlanetEffect : MonoBehaviour
     [SerializeField] private int mergeCount;
     private Rigidbody2D rb;
     private float radius;
-    private float deadRadius = 4f;
+    private float deadRadius = 5f;
     private int maxMergeCount = 9;
     private bool canDie = false;
     private void Start()
