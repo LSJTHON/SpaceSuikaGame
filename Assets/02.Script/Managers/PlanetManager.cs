@@ -28,8 +28,8 @@ public class PlanetManager : Singleton<PlanetManager>
     private Animator deadAnimation;
 
 
-    public bool isDead = false;
     private bool isStopAnimation = false;
+    public bool isDead = false;
 
     #region Getter and setter
     public void SetScore(int score)
@@ -92,6 +92,7 @@ public class PlanetManager : Singleton<PlanetManager>
             }
 
             gameOverPanel.SetActive(false);
+            totalScore = 0;
             StartGame();
         });
     }

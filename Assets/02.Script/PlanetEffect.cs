@@ -27,13 +27,13 @@ public class PlanetEffect : MonoBehaviour
             Vector2 newVelocity = rb.velocity + gravity * Time.fixedDeltaTime;
 
             // 추가된 코드: Vector2.zero 방향으로 더 강하게 주기
-            float addMagnet = 3f; // 추가 힘의 크기
+            float addMagnet = 4f; // 추가 힘의 크기
 
             Vector2 zeroPosition = (Vector2.zero - newVelocity).normalized;
 
             newVelocity += zeroPosition * addMagnet * Time.fixedDeltaTime;
 
-            float fixedSpeed = 7f;
+            float fixedSpeed = 9f;
 
             if (newVelocity.magnitude > fixedSpeed)
             {
