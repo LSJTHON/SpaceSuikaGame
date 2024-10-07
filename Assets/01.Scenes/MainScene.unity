@@ -2335,7 +2335,7 @@ GameObject:
   - component: {fileID: 39071545}
   - component: {fileID: 39071546}
   m_Layer: 0
-  m_Name: Line
+  m_Name: OrbitLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
