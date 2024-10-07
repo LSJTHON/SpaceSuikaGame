@@ -9,8 +9,6 @@ public class DragAndFire : MonoBehaviour
     private Vector2 deltaPosition;
     [SerializeField] private GameObject Line;
     [SerializeField] private LineRenderer planetSlingEffect;
-
-
     private void Update()
     {
         if (Input.GetMouseButtonDown(0)) // 클릭 시작 시 초기 마우스 위치 저장
@@ -31,7 +29,7 @@ public class DragAndFire : MonoBehaviour
             if(Vector2.Distance(initialMousePosition,mousePosition) <= 1f){
                 PlanetManager.Instance.GetFirePlanet().transform.position = firstMousePoint + deltaPosition;
                 shootingForce = Vector2.Distance(initialMousePosition,mousePosition);
-                planetSlingEffect.SetPosition(1, -(deltaPosition*2));
+                planetSlingEffect.SetPosition(1, -(deltaPosition*3));
             }else{
                 //Debug.Log("어어 길다길어");
             }
