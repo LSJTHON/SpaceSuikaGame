@@ -580,6 +580,7 @@ MonoBehaviour:
   gameOverTargetHole: {fileID: 1740340295}
   gameOverPanel: {fileID: 415949440}
   deadPlanetTransform: {fileID: 0}
+  dragAndFire: {fileID: 341833781}
   isDead: 0
 --- !u!4 &341833780
 Transform:

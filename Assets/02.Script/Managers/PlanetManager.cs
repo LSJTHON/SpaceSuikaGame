@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,6 +24,7 @@ public class PlanetManager : Singleton<PlanetManager>
     [SerializeField] private GameObject gameOverTargetHole;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private Transform deadPlanetTransform;
+    [SerializeField] private DragAndFire dragAndFire;
     private Animator deadAnimation;
 
 
@@ -129,6 +131,7 @@ public class PlanetManager : Singleton<PlanetManager>
     }
     private void StartGame()
     {
+        dragAndFire.enabled = true;
         scoreText.text = $"Score : {totalScore}";
         firePlanet = Instantiate(planetPrefabList[Random.Range(0, 4)], firePlanetSpawnPoint);
         firePlanet.GetComponent<Rigidbody2D>().simulated = false;
@@ -153,6 +156,7 @@ public class PlanetManager : Singleton<PlanetManager>
                 firePlanetSpawnPoint.GetChild(fireChildIndex).gameObject.GetComponent<Rigidbody2D>().simulated = false;
             }
             gameOverPanel.SetActive(true);
+            dragAndFire.enabled = false;
             gameOverTargetHole.transform.position = new Vector2(deadPlanetTransform.position.x, deadPlanetTransform.position.y);
             isStopAnimation = false;
             //Debug.Log(" 너 지금 몇번 호출중?");
