@@ -237,6 +237,9 @@ Transform:
   m_Children:
   - {fileID: 1258965180}
   - {fileID: 415949441}
+  - {fileID: 2539339754850485826}
+  - {fileID: 3556603614995732528}
+  - {fileID: 930211768}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &119696161
@@ -1161,12 +1164,12 @@ Transform:
   m_GameObject: {fileID: 930211767}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 9.400503, y: 1.2163453, z: 0.09310315}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 729844543}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 11086465}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &930211769
 SpriteRenderer:
@@ -2334,13 +2337,13 @@ Transform:
   m_GameObject: {fileID: 1856323583527434593}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10, y: 0, z: 0}
+  m_LocalPosition: {x: -0.59949684, y: 1.2163453, z: 0.09310315}
   m_LocalScale: {x: 2, y: 2, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 370204417}
   - {fileID: 119696162}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 11086465}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &3556603614995732528
 Transform:
@@ -2351,11 +2354,11 @@ Transform:
   m_GameObject: {fileID: 7034500516720353849}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 9.400503, y: 1.2163453, z: 0.09310315}
   m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 11086465}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3565175376703235072
 SpriteRenderer:
@@ -2640,7 +2643,4 @@ SceneRoots:
   - {fileID: 668762824}
   - {fileID: 341833780}
   - {fileID: 1521199913}
-  - {fileID: 930211768}
-  - {fileID: 3556603614995732528}
-  - {fileID: 2539339754850485826}
   - {fileID: 11086465}
