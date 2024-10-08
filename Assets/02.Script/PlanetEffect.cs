@@ -7,7 +7,7 @@ public class PlanetEffect : MonoBehaviour
     [SerializeField] private int mergeCount;
     private Rigidbody2D rb;
     private float radius;
-    private float deadRadius = 4f;
+    private float deadRadius = 5f;
     private int maxMergeCount = 9;
     private bool canDie = false;
     private void Start()
@@ -27,13 +27,13 @@ public class PlanetEffect : MonoBehaviour
             Vector2 newVelocity = rb.velocity + gravity * Time.fixedDeltaTime;
 
             // 추가된 코드: Vector2.zero 방향으로 더 강하게 주기
-            float addMagnet = 3f; // 추가 힘의 크기
+            float addMagnet = 4f; // 추가 힘의 크기
 
             Vector2 zeroPosition = (Vector2.zero - newVelocity).normalized;
 
             newVelocity += zeroPosition * addMagnet * Time.fixedDeltaTime;
 
-            float fixedSpeed = 7f;
+            float fixedSpeed = 9f;
 
             if (newVelocity.magnitude > fixedSpeed)
             {
@@ -47,6 +47,8 @@ public class PlanetEffect : MonoBehaviour
         {
             PlanetManager.Instance.isDead = true;
             PlanetManager.Instance.GameOver(2f, this.transform);
+            //GetChild(1) : ExplosionEffect object
+            transform.GetChild(1).gameObject.SetActive(true);
             canDie = false;
         }
     }
