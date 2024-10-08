@@ -126,6 +126,7 @@ public class PlanetManager : Singleton<PlanetManager>
             firePlanet.transform.position = planetLaunchPoint.position;
             waitingPlanet.GetComponent<Rigidbody2D>().simulated = false;
             waitingPlanet.GetComponent<PlanetEffect>().enabled = false;
+            waitingPlanet.GetComponent<ParticleSystem>().Stop();
         }
     }
     private void StartGame()
@@ -134,8 +135,10 @@ public class PlanetManager : Singleton<PlanetManager>
         scoreText.text = $"Score : {totalScore}";
         firePlanet = Instantiate(planetPrefabList[Random.Range(0, 4)], planetLaunchPoint);
         firePlanet.GetComponent<Rigidbody2D>().simulated = false;
+        firePlanet.GetComponent<ParticleSystem>().Stop();
         waitingPlanet = Instantiate(planetPrefabList[Random.Range(0, 4)], nextPlanetDisplayPoint.transform);
         waitingPlanet.GetComponent<Rigidbody2D>().simulated = false;
+        waitingPlanet.GetComponent<ParticleSystem>().Stop();
     }
     public void GameOver(float delay = 0.1f, Transform deadPlanet = null)
     {

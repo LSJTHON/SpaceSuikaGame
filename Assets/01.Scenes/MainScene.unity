@@ -554,7 +554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 195721124}
   m_Layer: 0
-  m_Name: FirePlanetSpawnPosition
+  m_Name: PlanetLaunchPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -703,8 +703,8 @@ MonoBehaviour:
   - {fileID: 4564999623854678311, guid: 0ab441532f1e13849aedb8a183c75521, type: 3}
   - {fileID: 4564999623854678311, guid: 4af358546e97e9345bc798ab28fd6124, type: 3}
   restartButton: {fileID: 1141040906}
-  waitingPlanetSpawnPint: {fileID: 809119558}
-  firePlanetSpawnPoint: {fileID: 195721124}
+  nextPlanetDisplayPoint: {fileID: 0}
+  planetLaunchPoint: {fileID: 0}
   waitingPlanet: {fileID: 0}
   firePlanet: {fileID: 0}
   totalScore: 0
@@ -1279,7 +1279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 809119558}
   m_Layer: 0
-  m_Name: WaitingPlanetSpawnPoint
+  m_Name: NextPlanetDisplayPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
