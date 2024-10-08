@@ -47,6 +47,8 @@ public class PlanetEffect : MonoBehaviour
         {
             PlanetManager.Instance.isDead = true;
             PlanetManager.Instance.GameOver(2f, this.transform);
+            //GetChild(1) : ExplosionEffect object
+            transform.GetChild(1).gameObject.SetActive(true);
             canDie = false;
         }
     }
