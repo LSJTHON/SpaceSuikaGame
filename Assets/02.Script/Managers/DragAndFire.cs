@@ -35,10 +35,10 @@ public class DragAndFire : MonoBehaviour
             }
         }else if(Input.GetMouseButtonUp(0) && PlanetManager.Instance.GetFirePlanet() != null && initialMousePosition.x <= 5f)
         {
-            Rigidbody2D waitingPlanetRigidbody = PlanetManager.Instance.GetFirePlanet().GetComponent<Rigidbody2D>();
-            waitingPlanetRigidbody.gameObject.GetComponent<PlanetEffect>().enabled = true;
-            waitingPlanetRigidbody.simulated = true;
-            waitingPlanetRigidbody.AddForce(-deltaPosition.normalized * shootingForce* 500f);
+            Rigidbody2D firePlanetRigidbody = PlanetManager.Instance.GetFirePlanet().GetComponent<Rigidbody2D>();
+            firePlanetRigidbody.gameObject.GetComponent<PlanetEffect>().enabled = true;
+            firePlanetRigidbody.simulated = true;
+            firePlanetRigidbody.AddForce(-deltaPosition.normalized * shootingForce* 500f);
             PlanetManager.Instance.SetFirePlanet(null);
             Line.SetActive(false);
             StartCoroutine(PlanetManager.Instance.NextPlanet(1f));

@@ -13,7 +13,6 @@ public class PlanetEffect : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
         planetId = PlanetManager.Instance.GetPlanetCount();
         PlanetManager.Instance.SetPlanetCount();
         radius = transform.localScale.x / 2;
@@ -23,18 +22,15 @@ public class PlanetEffect : MonoBehaviour
         if (rb.simulated)
         {
             Vector2 gravityDir = (Vector2.zero - rb.position).normalized;
+            Debug.Log(gravityDir);
             Vector2 gravity = 9.8f * gravityDir;
             Vector2 newVelocity = rb.velocity + gravity * Time.fixedDeltaTime;
 
             // 추가된 코드: Vector2.zero 방향으로 더 강하게 주기
             float addMagnet = 4f; // 추가 힘의 크기
-
             Vector2 zeroPosition = (Vector2.zero - newVelocity).normalized;
-
             newVelocity += zeroPosition * addMagnet * Time.fixedDeltaTime;
-
             float fixedSpeed = 9f;
-
             if (newVelocity.magnitude > fixedSpeed)
             {
                 newVelocity = newVelocity.normalized * fixedSpeed;
@@ -58,23 +54,35 @@ public class PlanetEffect : MonoBehaviour
         if (other.gameObject.CompareTag("Planet"))
         {
             PlanetEffect otherPlanet = other.gameObject.GetComponent<PlanetEffect>();
-            if (this.planetId > otherPlanet.planetId && this.mergeCount == otherPlanet.mergeCount && this.mergeCount < maxMergeCount)
+            if (this.planetId > otherPlanet.planetId 
+                && this.mergeCount == otherPlanet.mergeCount 
+                && this.mergeCount < maxMergeCount
+                )
             {
                 Debug.Log("Merge!!!!!!");
                 Destroy(this.gameObject);
                 Destroy(other.gameObject);
-                Vector2 middlePosition = (this.transform.position + other.transform.position) / 2;
-                GameObject mergePlanet = Instantiate(PlanetManager.Instance.GetPlanetPrefabList(this.mergeCount + 1), middlePosition, Quaternion.identity);
+                Vector2 middlePosition = 
+                    (this.transform.position + other.transform.position) / 2;
+                GameObject mergePlanet = 
+                    Instantiate(PlanetManager.Instance.GetPlanetPrefabList(this.mergeCount + 1), 
+                    middlePosition, 
+                    Quaternion.identity);
                 mergePlanet.transform.SetParent(PlanetManager.Instance.GetFirePlanetSpawnPoint());
                 PlanetManager.Instance.SetScore((mergeCount + 1) * 30);
-                PlanetManager.Instance.scoreText.text = $"Score : {PlanetManager.Instance.GetScore()}";
-            }else if(this.planetId > otherPlanet.planetId && this.mergeCount == otherPlanet.mergeCount && this.mergeCount >= maxMergeCount)
+                PlanetManager.Instance.scoreText.text = 
+                    $"Score : {PlanetManager.Instance.GetScore()}";
+            }else if(this.planetId > otherPlanet.planetId 
+                && this.mergeCount == otherPlanet.mergeCount
+                && this.mergeCount >= maxMergeCount
+                )
             {
-                Debug.Log("하늘 아래 태양이 둘 일 수 없다.");
+                Debug.Log("하늘 아래 태양이 둘 일 수 없다 이말이야");
                 Destroy(this.gameObject);
                 Destroy(other.gameObject);
                 PlanetManager.Instance.SetScore((mergeCount + 1) * 30);
-                PlanetManager.Instance.scoreText.text = $"Score : {PlanetManager.Instance.GetScore()}";
+                PlanetManager.Instance.scoreText.text = 
+                    $"Score : {PlanetManager.Instance.GetScore()}";
             }
         }
         if (!canDie)
