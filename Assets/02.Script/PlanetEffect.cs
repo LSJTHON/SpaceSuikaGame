@@ -48,7 +48,6 @@ public class PlanetEffect : MonoBehaviour
             canDie = false;
         }
     }
-
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Planet"))
@@ -68,6 +67,7 @@ public class PlanetEffect : MonoBehaviour
                     Instantiate(PlanetManager.Instance.GetPlanetPrefabList(this.mergeCount + 1), 
                     middlePosition, 
                     Quaternion.identity);
+                mergePlanet.GetComponent<ParticleSystem>().Play();
                 mergePlanet.transform.SetParent(PlanetManager.Instance.GetFirePlanetSpawnPoint());
                 PlanetManager.Instance.SetScore((mergeCount + 1) * 30);
                 PlanetManager.Instance.scoreText.text = 
