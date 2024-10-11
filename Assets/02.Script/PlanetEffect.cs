@@ -8,6 +8,8 @@ public class PlanetEffect : MonoBehaviour
     private Rigidbody2D rb;
     private float radius;
     private float deadRadius = 5f;
+    private float fixedSpeed = 12f;
+    private float addMagnet = 4f;
     private int maxMergeCount = 9;
     private bool canDie = false;
     private void Start()
@@ -22,19 +24,16 @@ public class PlanetEffect : MonoBehaviour
         if (rb.simulated)
         {
             Vector2 gravityDir = (Vector2.zero - rb.position).normalized;
-            Debug.Log(gravityDir);
+            //Debug.Log(gravityDir);
             Vector2 gravity = 9.8f * gravityDir;
             Vector2 newVelocity = rb.velocity + gravity * Time.fixedDeltaTime;
-
-            // 추가된 코드: Vector2.zero 방향으로 더 강하게 주기
-            float addMagnet = 4f; // 추가 힘의 크기
             Vector2 zeroPosition = (Vector2.zero - newVelocity).normalized;
             newVelocity += zeroPosition * addMagnet * Time.fixedDeltaTime;
-            float fixedSpeed = 9f;
             if (newVelocity.magnitude > fixedSpeed)
             {
                 newVelocity = newVelocity.normalized * fixedSpeed;
             }
+            Debug.Log(newVelocity + " 니가 던지봐라 힘");
             rb.velocity = newVelocity;
         }
         float isDeadRadius = deadRadius - radius;
