@@ -825,8 +825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a55a8ecdfcf659e46bdf0fd35cad143f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Line: {fileID: 1953356189}
-  planetSlingEffect: {fileID: 0}
+  OrbitLine: {fileID: 1953356189}
 --- !u!1 &370204416
 GameObject:
   m_ObjectHideFlags: 0
