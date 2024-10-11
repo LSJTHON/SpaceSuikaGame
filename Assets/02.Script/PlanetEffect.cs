@@ -33,7 +33,7 @@ public class PlanetEffect : MonoBehaviour
             {
                 newVelocity = newVelocity.normalized * fixedSpeed;
             }
-            Debug.Log(newVelocity + " 니가 던지봐라 힘");
+            //Debug.Log(newVelocity + " 어어 끌어당긴다");
             rb.velocity = newVelocity;
         }
         float isDeadRadius = deadRadius - radius;
@@ -52,36 +52,30 @@ public class PlanetEffect : MonoBehaviour
         if (other.gameObject.CompareTag("Planet"))
         {
             PlanetEffect otherPlanet = other.gameObject.GetComponent<PlanetEffect>();
-            if (this.planetId > otherPlanet.planetId 
-                && this.mergeCount == otherPlanet.mergeCount 
-                && this.mergeCount < maxMergeCount
-                )
+            if (this.planetId > otherPlanet.planetId
+                && this.mergeCount == otherPlanet.mergeCount
+                && this.mergeCount < maxMergeCount)
             {
                 Debug.Log("Merge!!!!!!");
                 Destroy(this.gameObject);
                 Destroy(other.gameObject);
-                Vector2 middlePosition = 
-                    (this.transform.position + other.transform.position) / 2;
-                GameObject mergePlanet = 
-                    Instantiate(PlanetManager.Instance.GetPlanetPrefabList(this.mergeCount + 1), 
-                    middlePosition, 
-                    Quaternion.identity);
+                Vector2 middlePosition = (this.transform.position + other.transform.position) / 2;
+                GameObject mergePlanet =
+                    Instantiate(PlanetManager.Instance.GetPlanetPrefabList(this.mergeCount + 1), middlePosition, Quaternion.identity);
                 mergePlanet.GetComponent<ParticleSystem>().Play();
                 mergePlanet.transform.SetParent(PlanetManager.Instance.GetFirePlanetSpawnPoint());
                 PlanetManager.Instance.SetScore((mergeCount + 1) * 30);
-                PlanetManager.Instance.scoreText.text = 
-                    $"Score : {PlanetManager.Instance.GetScore()}";
-            }else if(this.planetId > otherPlanet.planetId 
+                PlanetManager.Instance.scoreText.text = $"Score : {PlanetManager.Instance.GetScore()}";
+            }
+            else if (this.planetId > otherPlanet.planetId
                 && this.mergeCount == otherPlanet.mergeCount
-                && this.mergeCount >= maxMergeCount
-                )
+                && this.mergeCount >= maxMergeCount)
             {
                 //Debug.Log("하늘 아래 태양이 둘 일 수 없다 이말이야");
                 Destroy(this.gameObject);
                 Destroy(other.gameObject);
                 PlanetManager.Instance.SetScore((mergeCount + 1) * 30);
-                PlanetManager.Instance.scoreText.text = 
-                    $"Score : {PlanetManager.Instance.GetScore()}";
+                PlanetManager.Instance.scoreText.text = $"Score : {PlanetManager.Instance.GetScore()}";
             }
         }
         if (!canDie)
