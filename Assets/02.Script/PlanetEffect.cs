@@ -7,9 +7,9 @@ public class PlanetEffect : MonoBehaviour
     [SerializeField] private int mergeCount;
     private Rigidbody2D rb;
     private float radius;
-    private float deadRadius = 5f;
-    private float fixedSpeed = 12f;
-    private float addMagnet = 4f;
+    private float deadRadius;
+    private float maxSpeed = 12f;
+    private float addMagnet = 3f;
     private int maxMergeCount = 9;
     private bool canDie = false;
     private void Start()
@@ -17,6 +17,7 @@ public class PlanetEffect : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         planetId = PlanetManager.Instance.GetPlanetCount();
         PlanetManager.Instance.SetPlanetCount();
+        deadRadius = PlanetManager.Instance.GetDeadLine().localScale.x / 2;
         radius = transform.localScale.x / 2;
     }
     private void FixedUpdate()
@@ -29,9 +30,9 @@ public class PlanetEffect : MonoBehaviour
             Vector2 newVelocity = rb.velocity + gravity * Time.fixedDeltaTime;
             Vector2 zeroPosition = (Vector2.zero - newVelocity).normalized;
             newVelocity += zeroPosition * addMagnet * Time.fixedDeltaTime;
-            if (newVelocity.magnitude > fixedSpeed)
+            if (newVelocity.magnitude > maxSpeed)
             {
-                newVelocity = newVelocity.normalized * fixedSpeed;
+                newVelocity = newVelocity.normalized * maxSpeed;
             }
             //Debug.Log(newVelocity + " 어어 끌어당긴다");
             rb.velocity = newVelocity;
@@ -41,7 +42,7 @@ public class PlanetEffect : MonoBehaviour
         if (canDie && isDeadRadius < planetDistance)
         {
             PlanetManager.Instance.isDead = true;
-            PlanetManager.Instance.GameOver(2f, this.transform);
+            PlanetManager.Instance.GameOver(this.transform);
             //GetChild(1) : ExplosionEffect object
             transform.GetChild(1).gameObject.SetActive(true);
             canDie = false;
@@ -65,7 +66,7 @@ public class PlanetEffect : MonoBehaviour
                 mergePlanet.GetComponent<ParticleSystem>().Play();
                 mergePlanet.transform.SetParent(PlanetManager.Instance.GetFirePlanetSpawnPoint());
                 PlanetManager.Instance.SetScore((mergeCount + 1) * 30);
-                PlanetManager.Instance.scoreText.text = $"Score : {PlanetManager.Instance.GetScore()}";
+                PlanetManager.Instance.scoreText.text = $"SCORE : {PlanetManager.Instance.GetScore()}";
             }
             else if (this.planetId > otherPlanet.planetId
                 && this.mergeCount == otherPlanet.mergeCount
@@ -75,7 +76,7 @@ public class PlanetEffect : MonoBehaviour
                 Destroy(this.gameObject);
                 Destroy(other.gameObject);
                 PlanetManager.Instance.SetScore((mergeCount + 1) * 30);
-                PlanetManager.Instance.scoreText.text = $"Score : {PlanetManager.Instance.GetScore()}";
+                PlanetManager.Instance.scoreText.text = $"SCORE : {PlanetManager.Instance.GetScore()}";
             }
         }
         if (!canDie)

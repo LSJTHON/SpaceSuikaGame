@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlanetManager : Singleton<PlanetManager>
@@ -25,8 +26,9 @@ public class PlanetManager : Singleton<PlanetManager>
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private Transform deadPlanetTransform;
     [SerializeField] private DragAndFire dragAndFire;
+    [SerializeField] private Transform deadLine;
     private Animator deadAnimation;
-    private bool isStopAnimation = false;
+    //private bool isStopAnimation = false;
     public bool isDead = false;
 
 
@@ -66,6 +68,10 @@ public class PlanetManager : Singleton<PlanetManager>
     {
         firePlanet = fireSpawnPoint;
     }
+    public Transform GetDeadLine()
+    {
+        return deadLine;
+    }
     #endregion
 
     private void Start()
@@ -73,26 +79,30 @@ public class PlanetManager : Singleton<PlanetManager>
         totalScore = 0;
         StartGame();
 
-        restartButton.onClick.AddListener(() => {
+        restartButton.onClick.AddListener(() =>
+        {
+            //씬 전환으로 재시작
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
-            for (int waitingChildIndex = 0; waitingChildIndex < nextPlanetDisplayPoint.childCount; waitingChildIndex++)
-            {
-                Destroy(nextPlanetDisplayPoint.GetChild(waitingChildIndex).gameObject);
-            }
-            for (int fireChildIndex = 0; fireChildIndex < planetLaunchPoint.childCount; fireChildIndex++)
-            {
-                Destroy(planetLaunchPoint.GetChild(fireChildIndex).gameObject);
-            }
+            //로직으로 전부 초기화
+            //for (int waitingChildIndex = 0; waitingChildIndex < nextPlanetDisplayPoint.childCount; waitingChildIndex++)
+            //{
+            //    Destroy(nextPlanetDisplayPoint.GetChild(waitingChildIndex).gameObject);
+            //}
+            //for (int fireChildIndex = 0; fireChildIndex < planetLaunchPoint.childCount; fireChildIndex++)
+            //{
+            //    Destroy(planetLaunchPoint.GetChild(fireChildIndex).gameObject);
+            //}
 
-            if (isStopAnimation)
-            {
-                gameOverTargetHole.transform.localScale = new Vector2(33,33);
-                deadAnimation.enabled = true;
-            }
+            //if (isStopAnimation)
+            //{
+            //    gameOverTargetHole.transform.localScale = new Vector2(33, 33);
+            //    deadAnimation.enabled = true;
+            //}
 
-            gameOverPanel.SetActive(false);
-            totalScore = 0;
-            StartGame();
+            //gameOverPanel.SetActive(false);
+            //totalScore = 0;
+            //StartGame();
         });
     }
     private void Update()
@@ -103,7 +113,7 @@ public class PlanetManager : Singleton<PlanetManager>
         }
         if (gameOverPanel.activeSelf && gameOverTargetHole.transform.localScale.x <= deadPlanetTransform.localScale.x + 1f)
         {
-            isStopAnimation = true;
+            //isStopAnimation = true;
             deadAnimation = gameOverTargetHole.GetComponent<Animator>();
             deadAnimation.enabled = false;
             deadPlanetTransform = null;
@@ -132,33 +142,29 @@ public class PlanetManager : Singleton<PlanetManager>
     private void StartGame()
     {
         dragAndFire.enabled = true;
-        scoreText.text = $"Score : {totalScore}";
+        scoreText.text = $"SCORE : {totalScore}";
         firePlanet = Instantiate(planetPrefabList[Random.Range(0, 4)], planetLaunchPoint);
         firePlanet.GetComponent<Rigidbody2D>().simulated = false;
         waitingPlanet = Instantiate(planetPrefabList[Random.Range(0, 4)], nextPlanetDisplayPoint.transform);
         waitingPlanet.GetComponent<Rigidbody2D>().simulated = false;
     }
-    public void GameOver(float delay = 0.1f, Transform deadPlanet = null)
+    public void GameOver(Transform deadPlanet = null)
     {
-        if (deadPlanet != null)
-        {
-            deadPlanetTransform = deadPlanet;
-        }
-        if (isDead)
+        //if (deadPlanet != null)
+        //{
+        //}
+        if (isDead && deadPlanet != null)
         {
             isDead = false;
-            for (int waitingChildIndex = 0; waitingChildIndex < nextPlanetDisplayPoint.childCount; waitingChildIndex++)
-            {
-                planetLaunchPoint.GetChild(waitingChildIndex).gameObject.GetComponent<Rigidbody2D>().simulated = false;
-            }
+            //isStopAnimation = false;
+            dragAndFire.enabled = false;
+            gameOverPanel.SetActive(true);
+            deadPlanetTransform = deadPlanet;
+            gameOverTargetHole.transform.position = new Vector2(deadPlanetTransform.position.x, deadPlanetTransform.position.y);
             for (int fireChildIndex = 0; fireChildIndex < planetLaunchPoint.childCount; fireChildIndex++)
             {
                 planetLaunchPoint.GetChild(fireChildIndex).gameObject.GetComponent<Rigidbody2D>().simulated = false;
             }
-            gameOverPanel.SetActive(true);
-            dragAndFire.enabled = false;
-            gameOverTargetHole.transform.position = new Vector2(deadPlanetTransform.position.x, deadPlanetTransform.position.y);
-            isStopAnimation = false;
             //Debug.Log(" 너 지금 몇번 호출중?");
         }
     }

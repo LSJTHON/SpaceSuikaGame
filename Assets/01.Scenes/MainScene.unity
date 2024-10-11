@@ -773,7 +773,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4add3b520e53e8e42b3a2546e33bff8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDontDestroy: 1
   planetCount: 1
   planetPrefabList:
   - {fileID: 2084265983489535855, guid: ff7c036036380fa4088a8a57514722b8, type: 3}
@@ -797,6 +796,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 415949440}
   deadPlanetTransform: {fileID: 0}
   dragAndFire: {fileID: 341833781}
+  deadLine: {fileID: 3556603614995732528}
   isDead: 0
 --- !u!4 &341833780
 Transform:
