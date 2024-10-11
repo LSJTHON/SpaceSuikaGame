@@ -9,7 +9,7 @@ public class PlanetEffect : MonoBehaviour
     private float radius;
     private float deadRadius;
     private float maxSpeed = 12f;
-    private float addMagnet = 3f;
+    private float addMagnet = 5f;
     private int maxMergeCount = 9;
     private bool canDie = false;
     private void Start()
