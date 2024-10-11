@@ -5,7 +5,6 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
     private static T instance = null;
     protected virtual void Awake()
     {
-
         if (instance == null)
         {
             instance = (T)this;
@@ -15,7 +14,6 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
             Destroy(this.gameObject);
         }
     }
-
     public static T Instance
     {
         get

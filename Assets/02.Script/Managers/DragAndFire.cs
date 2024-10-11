@@ -1,22 +1,20 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DragAndFire : MonoBehaviour
 {
+    [SerializeField] private GameObject OrbitLine;
+    private LineRenderer planetSlingEffect;
     private Vector2 firstMousePoint = new Vector2(-10, 0);
-    private float shootingForce;
     private Vector2 initialMousePosition;
     private Vector2 deltaPosition;
-    [SerializeField] private GameObject Line;
-    [SerializeField] private LineRenderer planetSlingEffect;
+    private float shootingForce;
     private void Update()
     {
         if (Input.GetMouseButtonDown(0)) // 클릭 시작 시 초기 마우스 위치 저장
         {
             initialMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Line.SetActive(true);
-            planetSlingEffect = Line.GetComponent<LineRenderer>();
-
+            OrbitLine.SetActive(true);
+            planetSlingEffect = OrbitLine.GetComponent<LineRenderer>();
             planetSlingEffect.SetPosition(0, Vector2.zero);
             planetSlingEffect.SetPosition(1, Vector2.zero);
         }
@@ -32,10 +30,6 @@ public class DragAndFire : MonoBehaviour
                 shootingForce = Vector2.Distance(initialMousePosition, mousePosition);
                 planetSlingEffect.SetPosition(1, -(deltaPosition * 3));
             }
-            else
-            {
-                //Debug.Log("어어 길다길어");
-            }
         }
         else if (Input.GetMouseButtonUp(0) && PlanetManager.Instance.GetFirePlanet() != null && initialMousePosition.x <= 5f)
         {
@@ -44,12 +38,8 @@ public class DragAndFire : MonoBehaviour
             firePlanetRigidbody.simulated = true;
             firePlanetRigidbody.AddForce(-deltaPosition.normalized * shootingForce * 500f);
             PlanetManager.Instance.SetFirePlanet(null);
-            Line.SetActive(false);
+            OrbitLine.SetActive(false);
             StartCoroutine(PlanetManager.Instance.NextPlanet(1f));
-        }
-        else
-        {
-            return;
         }
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,9 +27,7 @@ public class PlanetManager : Singleton<PlanetManager>
     [SerializeField] private DragAndFire dragAndFire;
     [SerializeField] private Transform deadLine;
     private Animator deadAnimation;
-    //private bool isStopAnimation = false;
     public bool isDead = false;
-
 
     #region Getter and setter
     public void SetScore(int score)
@@ -78,12 +75,10 @@ public class PlanetManager : Singleton<PlanetManager>
     {
         totalScore = 0;
         StartGame();
-
         restartButton.onClick.AddListener(() =>
         {
             //씬 전환으로 재시작
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
             //로직으로 전부 초기화
             //for (int waitingChildIndex = 0; waitingChildIndex < nextPlanetDisplayPoint.childCount; waitingChildIndex++)
             //{
@@ -113,7 +108,6 @@ public class PlanetManager : Singleton<PlanetManager>
         }
         if (gameOverPanel.activeSelf && gameOverTargetHole.transform.localScale.x <= deadPlanetTransform.localScale.x + 1f)
         {
-            //isStopAnimation = true;
             deadAnimation = gameOverTargetHole.GetComponent<Animator>();
             deadAnimation.enabled = false;
             deadPlanetTransform = null;
@@ -150,13 +144,9 @@ public class PlanetManager : Singleton<PlanetManager>
     }
     public void GameOver(Transform deadPlanet = null)
     {
-        //if (deadPlanet != null)
-        //{
-        //}
         if (isDead && deadPlanet != null)
         {
             isDead = false;
-            //isStopAnimation = false;
             dragAndFire.enabled = false;
             gameOverPanel.SetActive(true);
             deadPlanetTransform = deadPlanet;
