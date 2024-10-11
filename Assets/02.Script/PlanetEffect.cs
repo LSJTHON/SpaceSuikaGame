@@ -77,7 +77,7 @@ public class PlanetEffect : MonoBehaviour
                 && this.mergeCount >= maxMergeCount
                 )
             {
-                Debug.Log("하늘 아래 태양이 둘 일 수 없다 이말이야");
+                //Debug.Log("하늘 아래 태양이 둘 일 수 없다 이말이야");
                 Destroy(this.gameObject);
                 Destroy(other.gameObject);
                 PlanetManager.Instance.SetScore((mergeCount + 1) * 30);
