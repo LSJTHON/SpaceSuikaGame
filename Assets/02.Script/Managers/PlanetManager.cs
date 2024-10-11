@@ -49,6 +49,10 @@ public class PlanetManager : Singleton<PlanetManager>
     {
         return planetCount;
     }
+    public List<GameObject> GetPlanetPrefabLists()
+    {
+        return planetPrefabList;
+    }
     public GameObject GetPlanetPrefabList(int planetIndex)
     {
         return planetPrefabList[planetIndex];

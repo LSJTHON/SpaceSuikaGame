@@ -17,6 +17,7 @@ public class PlanetEffect : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         planetId = PlanetManager.Instance.GetPlanetCount();
         PlanetManager.Instance.SetPlanetCount();
+        maxMergeCount = PlanetManager.Instance.GetPlanetPrefabLists().Count;
         deadRadius = PlanetManager.Instance.GetDeadLine().localScale.x / 2;
         radius = transform.localScale.x / 2;
     }
