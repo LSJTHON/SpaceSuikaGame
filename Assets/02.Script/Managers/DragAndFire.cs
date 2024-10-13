@@ -4,7 +4,7 @@ public class DragAndFire : MonoBehaviour
 {
     [SerializeField] private GameObject OrbitLine;
     private LineRenderer planetOrbitLine;
-    private Vector2 firstMousePoint = new Vector2(-10, 0);
+    private Vector2 firstPlanetPoint = new Vector2(-10, 0);
     private Vector2 initialMousePosition;
     private Vector2 deltaPosition;
     private float shootingForce;
@@ -32,10 +32,8 @@ public class DragAndFire : MonoBehaviour
                 deltaPosition = deltaPosition.normalized * maxMouseDistance;
                 distance = maxMouseDistance;
             }
-
-            Debug.Log($"{firstMousePoint} 와 {deltaPosition}을 더함");
             // 행성의 위치
-            PlanetManager.Instance.GetFirePlanet().transform.position = firstMousePoint + deltaPosition;
+            PlanetManager.Instance.GetFirePlanet().transform.position = firstPlanetPoint + deltaPosition;
             shootingForce = distance;
             // 궤도 설정
             planetOrbitLine.SetPosition(1, -(deltaPosition * 3));

@@ -26,7 +26,6 @@ public class CustomPlanetMovement : MonoBehaviour
         if (rb.simulated)
         {
             Vector2 gravityDir = (Vector2.zero - rb.position).normalized;
-            Debug.Log(rb.position);
             Vector2 gravity = 9.8f * gravityDir;
             Vector2 newGravity = rb.velocity + gravity * Time.fixedDeltaTime;
 
@@ -56,6 +55,7 @@ public class CustomPlanetMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Planet"))
         {
             CustomPlanetMovement otherPlanet = other.gameObject.GetComponent<CustomPlanetMovement>();
+            //Debug.Log(otherPlanet.planetId +" 니 어케 접근함?");
             if (this.planetId > otherPlanet.planetId
                 && this.mergeCount == otherPlanet.mergeCount
                 && this.mergeCount < maxMergeCount)
@@ -73,7 +73,7 @@ public class CustomPlanetMovement : MonoBehaviour
             }
             else if (this.mergeCount >= maxMergeCount)
             {
-                //Debug.Log("하늘 아래 태양이 둘 일 수 없단다.");
+                //Debug.Log("은하계 멸망");
                 Destroy(this.gameObject);
                 Destroy(other.gameObject);
                 PlanetManager.Instance.SetScore((mergeCount + 1) * 30);
