@@ -13,6 +13,7 @@ public class CustomPlanetMovement : MonoBehaviour
     private float addMagnet = 5f;
     private float gravityScale = 9.8f;
     private bool deathEnabled = false;
+    private bool isDeathActivated = false;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -79,8 +80,9 @@ public class CustomPlanetMovement : MonoBehaviour
                 PlanetManager.Instance.scoreText.text = $"SCORE : {PlanetManager.Instance.GetScore()}";
             }
         }
-        if (!deathEnabled)
+        if (!isDeathActivated)
         {
+            isDeathActivated = true;
             StartCoroutine(OnDeath(2f));
         }
     }
