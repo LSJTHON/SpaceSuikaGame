@@ -77,31 +77,11 @@ public class PlanetManager : Singleton<PlanetManager>
 
     private void Start()
     {
-        totalScore = 0;
         StartGame();
         restartButton.onClick.AddListener(() =>
         {
             //씬 전환으로 재시작
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            //로직으로 전부 초기화
-            //for (int waitingChildIndex = 0; waitingChildIndex < nextPlanetDisplayPoint.childCount; waitingChildIndex++)
-            //{
-            //    Destroy(nextPlanetDisplayPoint.GetChild(waitingChildIndex).gameObject);
-            //}
-            //for (int fireChildIndex = 0; fireChildIndex < planetLaunchPoint.childCount; fireChildIndex++)
-            //{
-            //    Destroy(planetLaunchPoint.GetChild(fireChildIndex).gameObject);
-            //}
-
-            //if (isStopAnimation)
-            //{
-            //    gameOverTargetHole.transform.localScale = new Vector2(33, 33);
-            //    deadAnimation.enabled = true;
-            //}
-
-            //gameOverPanel.SetActive(false);
-            //totalScore = 0;
-            //StartGame();
         });
     }
     private void Update()
@@ -133,7 +113,7 @@ public class PlanetManager : Singleton<PlanetManager>
             waitingPlanet = Instantiate(planetPrefabList[randomPlanetIndex], nextPlanetDisplayPoint.transform);
             firePlanet.transform.position = planetLaunchPoint.position;
             waitingPlanet.GetComponent<Rigidbody2D>().simulated = false;
-            waitingPlanet.GetComponent<PlanetEffect>().enabled = false;
+            waitingPlanet.GetComponent<CustomPlanetMovement>().enabled = false;
             waitingPlanet.GetComponent<ParticleSystem>().Stop();
         }
     }

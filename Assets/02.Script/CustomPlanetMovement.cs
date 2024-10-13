@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlanetEffect : MonoBehaviour
+public class CustomPlanetMovement : MonoBehaviour
 {
     [SerializeField] private int planetId;
     [SerializeField] private int mergeCount;
@@ -26,17 +26,19 @@ public class PlanetEffect : MonoBehaviour
         if (rb.simulated)
         {
             Vector2 gravityDir = (Vector2.zero - rb.position).normalized;
-            //Debug.Log(gravityDir);
+            Debug.Log(rb.position);
             Vector2 gravity = 9.8f * gravityDir;
-            Vector2 newVelocity = rb.velocity + gravity * Time.fixedDeltaTime;
-            Vector2 zeroPosition = (Vector2.zero - newVelocity).normalized;
-            newVelocity += zeroPosition * addMagnet * Time.fixedDeltaTime;
-            if (newVelocity.magnitude > maxSpeed)
+            Vector2 newGravity = rb.velocity + gravity * Time.fixedDeltaTime;
+
+            Vector2 planetToZeroVector = (Vector2.zero - newGravity).normalized;
+            newGravity += planetToZeroVector * addMagnet * Time.fixedDeltaTime;
+
+            if (newGravity.magnitude > maxSpeed)
             {
-                newVelocity = newVelocity.normalized * maxSpeed;
+                newGravity = newGravity.normalized * maxSpeed;
             }
             //Debug.Log(newVelocity + " 어어 끌어당긴다");
-            rb.velocity = newVelocity;
+            rb.velocity = newGravity;
         }
         float isDeadRadius = deadRadius - radius;
         float planetDistance = transform.position.magnitude;
@@ -53,7 +55,7 @@ public class PlanetEffect : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Planet"))
         {
-            PlanetEffect otherPlanet = other.gameObject.GetComponent<PlanetEffect>();
+            CustomPlanetMovement otherPlanet = other.gameObject.GetComponent<CustomPlanetMovement>();
             if (this.planetId > otherPlanet.planetId
                 && this.mergeCount == otherPlanet.mergeCount
                 && this.mergeCount < maxMergeCount)
@@ -69,11 +71,9 @@ public class PlanetEffect : MonoBehaviour
                 PlanetManager.Instance.SetScore((mergeCount + 1) * 30);
                 PlanetManager.Instance.scoreText.text = $"SCORE : {PlanetManager.Instance.GetScore()}";
             }
-            else if (this.planetId > otherPlanet.planetId
-                && this.mergeCount == otherPlanet.mergeCount
-                && this.mergeCount >= maxMergeCount)
+            else if (this.mergeCount >= maxMergeCount)
             {
-                //Debug.Log("하늘 아래 태양이 둘 일 수 없다 이말이야");
+                //Debug.Log("하늘 아래 태양이 둘 일 수 없단다.");
                 Destroy(this.gameObject);
                 Destroy(other.gameObject);
                 PlanetManager.Instance.SetScore((mergeCount + 1) * 30);
