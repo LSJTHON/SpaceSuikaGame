@@ -78,7 +78,7 @@ Material:
     - _SrcBlend: 1
     - _Stencil: 2
     - _StencilComp: 6
-    - _StencilOp: 1
+    - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
     - _UVSec: 0

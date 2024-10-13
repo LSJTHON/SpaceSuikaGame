@@ -5,13 +5,14 @@ public class CustomPlanetMovement : MonoBehaviour
 {
     [SerializeField] private int planetId;
     [SerializeField] private int mergeCount;
+    private int maxMergeCount;
     private Rigidbody2D rb;
     private float radius;
     private float deadRadius;
     private float maxSpeed = 12f;
     private float addMagnet = 5f;
-    private int maxMergeCount = 9;
-    private bool canDie = false;
+    private float gravityScale = 9.8f;
+    private bool deathEnabled = false;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -25,13 +26,11 @@ public class CustomPlanetMovement : MonoBehaviour
     {
         if (rb.simulated)
         {
-            Vector2 gravityDir = (Vector2.zero - rb.position).normalized;
-            Vector2 gravity = 9.8f * gravityDir;
-            Vector2 newGravity = rb.velocity + gravity * Time.fixedDeltaTime;
-
+            Vector2 gravityDirection = (Vector2.zero - rb.position).normalized;
+            Vector2 gravityVector = gravityScale * gravityDirection;
+            Vector2 newGravity = rb.velocity + gravityVector * Time.fixedDeltaTime;
             Vector2 planetToZeroVector = (Vector2.zero - newGravity).normalized;
             newGravity += planetToZeroVector * addMagnet * Time.fixedDeltaTime;
-
             if (newGravity.magnitude > maxSpeed)
             {
                 newGravity = newGravity.normalized * maxSpeed;
@@ -41,13 +40,13 @@ public class CustomPlanetMovement : MonoBehaviour
         }
         float isDeadRadius = deadRadius - radius;
         float planetDistance = transform.position.magnitude;
-        if (canDie && isDeadRadius < planetDistance)
+        if (deathEnabled && isDeadRadius < planetDistance)
         {
             PlanetManager.Instance.isDead = true;
             PlanetManager.Instance.GameOver(this.transform);
             //GetChild(1) : ExplosionEffect object
             transform.GetChild(1).gameObject.SetActive(true);
-            canDie = false;
+            deathEnabled = false;
         }
     }
     private void OnCollisionEnter2D(Collision2D other)
@@ -55,7 +54,7 @@ public class CustomPlanetMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Planet"))
         {
             CustomPlanetMovement otherPlanet = other.gameObject.GetComponent<CustomPlanetMovement>();
-            //Debug.Log(otherPlanet.planetId +" 니 어케 접근함?");
+            //Debug.Log(otherPlanet.planetId +" 니 뭐고?");
             if (this.planetId > otherPlanet.planetId
                 && this.mergeCount == otherPlanet.mergeCount
                 && this.mergeCount < maxMergeCount)
@@ -80,15 +79,15 @@ public class CustomPlanetMovement : MonoBehaviour
                 PlanetManager.Instance.scoreText.text = $"SCORE : {PlanetManager.Instance.GetScore()}";
             }
         }
-        if (!canDie)
+        if (!deathEnabled)
         {
-            StartCoroutine(OnDeath());
+            StartCoroutine(OnDeath(2f));
         }
     }
-    private IEnumerator OnDeath()
+    private IEnumerator OnDeath(float delay)
     {
-        yield return new WaitForSeconds(2f);
-        canDie = true;
+        yield return new WaitForSeconds(delay);
+        deathEnabled = true;
         //Debug.Log(" 이제 죽는데이");
     }
 }
