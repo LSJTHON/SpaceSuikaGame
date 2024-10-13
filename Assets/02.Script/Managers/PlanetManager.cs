@@ -112,7 +112,6 @@ public class PlanetManager : Singleton<PlanetManager>
             waitingPlanet = Instantiate(planetPrefabList[randomPlanetIndex], nextPlanetDisplayPoint.transform);
             firePlanet.transform.position = planetLaunchPoint.position;
             waitingPlanet.GetComponent<Rigidbody2D>().simulated = false;
-            waitingPlanet.GetComponent<CustomPlanetMovement>().enabled = false;
             waitingPlanet.GetComponent<ParticleSystem>().Stop();
         }
     }

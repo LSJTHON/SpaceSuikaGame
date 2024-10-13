@@ -40,7 +40,6 @@ public class DragAndFire : MonoBehaviour
         else if (Input.GetMouseButtonUp(0) && PlanetManager.Instance.GetFirePlanet() != null && initialMousePosition.x <= 5f)
         {
             Rigidbody2D firePlanetRigidBody = PlanetManager.Instance.GetFirePlanet().GetComponent<Rigidbody2D>();
-            firePlanetRigidBody.gameObject.GetComponent<CustomPlanetMovement>().enabled = true;
             firePlanetRigidBody.simulated = true;
             firePlanetRigidBody.AddForce(-deltaPosition.normalized * shootingForce * addShottingForce);
             PlanetManager.Instance.SetFirePlanet(null);
