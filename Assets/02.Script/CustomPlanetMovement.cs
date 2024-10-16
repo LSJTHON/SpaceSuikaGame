@@ -92,4 +92,7 @@ public class CustomPlanetMovement : MonoBehaviour
         deathEnabled = true;
         //Debug.Log(" 이제 죽는데이");
     }
+
+
+    
 }
