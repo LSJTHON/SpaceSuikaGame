@@ -48,6 +48,7 @@ public class CustomPlanetMovement : MonoBehaviour
             //GetChild(1) : ExplosionEffect object
             transform.GetChild(1).gameObject.SetActive(true);
             deathEnabled = false;
+            
         }
     }
     private void OnCollisionEnter2D(Collision2D other)
